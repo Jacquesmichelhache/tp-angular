@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { ServerApiService } from '../app/server-api.service';
+import { RouterOutlet } from '@angular/router';
+
 
 @Component({
   selector: 'app-root',

@@ -1,0 +1,6 @@
+<mat-toolbar>
+  <span>Precicom - tp</span>
+  <span class="example-spacer"></span>
+  <button (click)="login()"  *ngIf="!authService.isLoggedIn">Login</button>
+  <button (click)="logout()" *ngIf="authService.isLoggedIn">Logout</button>
+</mat-toolbar>

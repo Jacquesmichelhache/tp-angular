@@ -3,38 +3,38 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { tap, map } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 
-interface UserParams {
+export interface UserParams {
   url:string,
   method?:string,
   redirect_url?:string,
   params?:{}
 }
 
-interface User {
+export interface User {
   email:string,
   password:string,
   remember_me?:string
 }
 
-interface Status {
+export interface Status {
   code:number,
   message:string
 }
 
-interface LogInResponse {
+export interface LogInResponse {
   data:User,
   status: Status
 }
-interface LogOutResponse{
+export interface LogOutResponse{
   status:Status
 }
-interface Customer {
+export interface Customer {
   name:string,
   addresscity:string,
   infoemail:string,
   relationshipstart:string
 }
-interface CustomersResponse {
+export interface CustomersResponse {
   status:Status,
   data:Customer[]
 }
