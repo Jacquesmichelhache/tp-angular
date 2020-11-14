@@ -31,7 +31,6 @@ export class LoginFormComponent implements OnInit {
   onSubmit(){
     let self = this;
     let user:User = this.profileForm.value   
-
    
 
     this.authService.login(user).subscribe(val=>{

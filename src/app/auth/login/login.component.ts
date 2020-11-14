@@ -1,11 +1,7 @@
-import { Component, OnInit,Inject } from '@angular/core';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { Component, OnInit } from '@angular/core';
+import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import { Router } from '@angular/router';
 
-export interface DialogData {
-  animal: string;
-  name: string;
-}
 
 
 @Component({
@@ -40,8 +36,6 @@ export class LoginComponent implements OnInit {
 })
 export class loginDialogComponent {
 
-  constructor(
-    public dialogRef: MatDialogRef<loginDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}  
+  constructor(public dialogRef: MatDialogRef<loginDialogComponent>) {}  
  
 }

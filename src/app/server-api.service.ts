@@ -39,6 +39,24 @@ export interface CustomersResponse {
   data:Customer[]
 }
 
+export interface createCustomerResponse {
+  status: "error" | "success",
+  data:{value:any,message:string}
+}
+export interface createCustomerRequest{
+  name:string,
+  relationshipstart:string,
+  infoemail:string,
+  activitytype:string,
+  addressapt?:string,
+  addressstreet?:string,
+  addresspostalcode?:string,
+  addresscity?:string
+}
+
+
+
+
 
 @Injectable({
   providedIn: 'root'
@@ -101,4 +119,26 @@ export class ServerApiService {
       })
     );      
   } 
+
+  createCustomer(customer:createCustomerRequest):Observable<createCustomerResponse>{
+    let options =  this.generateRequestOptions()
+    return this.http.post<createCustomerResponse>(this.BASE_URL + "customers",customer,options).pipe(
+      map(response=>{
+        return response; 
+      })
+    ); 
+  }
+
+  getActivityTypes():Observable<{}>{
+    let options =  this.generateRequestOptions()
+    return this.http.get<createCustomerResponse>(this.BASE_URL + "customers/activityTypes",options).pipe(
+      map(response=>{
+        if(response.status === "success"){
+          return response.data.value as {}
+        }else{
+          return {};
+        }
+      })
+    );
+  }
 }

@@ -13,14 +13,21 @@ import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 import { TableHeaderComponent } from './table-header/table-header.component';
 import { NewCustomerBtnComponent } from './new-customer-btn/new-customer-btn.component';
+import { NewCustomerFormComponent } from './new-customer-form/new-customer-form.component';
+import { NewCustomerDialogComponent } from './new-customer-dialog/new-customer-dialog.component';
+
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
-  declarations: [CustomersComponent, CustomersTableComponent, TableFilterComponent, TableHeaderComponent, NewCustomerBtnComponent],
+  declarations: [CustomersComponent, CustomersTableComponent, TableFilterComponent, TableHeaderComponent, NewCustomerBtnComponent, NewCustomerFormComponent, NewCustomerDialogComponent],
   imports: [
     DemoMaterialModule,
     CommonModule,
-    CustomersRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
+    CustomersRoutingModule,
+    MatDialogModule,   
     AgGridModule.withComponents([]) 
   ],
   providers: [

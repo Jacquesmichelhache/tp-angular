@@ -1,13 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
 @import "../node_modules/ag-grid-community/dist/styles/ag-grid.css";
 @import "../node_modules/ag-grid-community/dist/styles/ag-theme-alpine.css";
-@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 
-
-.mat-form-field-appearance-fill .mat-form-field-flex {
-  background-color: white;
+//allows vertical scrolling on dialog 
+.cdk-global-overlay-wrapper{
+  overflow:scroll;
 }
