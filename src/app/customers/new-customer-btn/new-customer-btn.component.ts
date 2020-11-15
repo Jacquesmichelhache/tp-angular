@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
+import { CustomersTableService } from '../customers-table.service';
 import {NewCustomerDialogComponent} from '../new-customer-dialog/new-customer-dialog.component'
 
 @Component({
@@ -9,7 +10,8 @@ import {NewCustomerDialogComponent} from '../new-customer-dialog/new-customer-di
 })
 export class NewCustomerBtnComponent implements OnInit {
 
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog,
+    private customersTableService:CustomersTableService) { }
 
   ngOnInit(): void {
   }
@@ -23,8 +25,10 @@ export class NewCustomerBtnComponent implements OnInit {
       width: '50%',maxWidth:"500px", minWidth:"300px"
     });
 
-    dialogRef.afterClosed().subscribe(result => {  
-     
+    dialogRef.afterClosed().subscribe(hasCreatedCustomer => {  
+      if(hasCreatedCustomer){        
+        this.customersTableService.refreshTable()
+      }     
     });
   } 
 

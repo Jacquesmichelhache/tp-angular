@@ -17,12 +17,13 @@ import { LogoutComponent } from './logout/logout.component';
 
 import {MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldModule} from '@angular/material/form-field';
 import { MatInputModule} from '@angular/material/input';
+import { ConfirmationDialogComponent } from './shared/confirmation-dialog/confirmation-dialog.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,  
-    HeaderComponent, LogoutComponent
+    HeaderComponent, LogoutComponent, ConfirmationDialogComponent
   ],
   imports: [   
     BrowserModule,    
@@ -36,6 +37,7 @@ import { MatInputModule} from '@angular/material/input';
   providers: [
     //{ provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [ConfirmationDialogComponent]
 })
 export class AppModule { }

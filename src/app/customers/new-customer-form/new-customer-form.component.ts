@@ -82,7 +82,7 @@ export class NewCustomerFormComponent implements OnInit {
         }
       }else{
         this._snackBar.open("Successfully created a Customer!", "Good job",{duration:2000})
-        this.dialogRef.close();
+        this.dialogRef.close(true);
       }  
     });
   } 

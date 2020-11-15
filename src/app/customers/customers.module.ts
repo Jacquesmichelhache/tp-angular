@@ -19,6 +19,7 @@ import { NewCustomerDialogComponent } from './new-customer-dialog/new-customer-d
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 
+
 @NgModule({
   declarations: [CustomersComponent, CustomersTableComponent, TableFilterComponent, TableHeaderComponent, NewCustomerBtnComponent, NewCustomerFormComponent, NewCustomerDialogComponent],
   imports: [

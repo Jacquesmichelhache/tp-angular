@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { tap, map } from 'rxjs/operators';
+import { tap, map, catchError} from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 
 export interface UserParams {
@@ -11,6 +11,7 @@ export interface UserParams {
 }
 
 export interface User {
+  id?:number,
   email:string,
   password:string,
   remember_me?:string
@@ -28,18 +29,21 @@ export interface LogInResponse {
 export interface LogOutResponse{
   status:Status
 }
+
 export interface Customer {
+  id:number,
   name:string,
   addresscity:string,
   infoemail:string,
-  relationshipstart:string
+  relationshipstart:string,
+  activitytype:string
 }
 export interface CustomersResponse {
   status:Status,
   data:Customer[]
 }
 
-export interface createCustomerResponse {
+export interface serverResponse {
   status: "error" | "success",
   data:{value:any,message:string}
 }
@@ -71,7 +75,7 @@ export class ServerApiService {
   constructor(private http: HttpClient) { }
 
 
-  logIn(user:User):Observable<boolean>{
+  logIn(user:User):Observable<boolean | User>{
 
     return this.http.post<LogInResponse>(this.BASE_URL + "login",{user},{observe: 'response'}).pipe(
       map(response=>{
@@ -82,7 +86,8 @@ export class ServerApiService {
           this.AUTHORIZATION_TOKEN = auth_token   
       
           console.log(response.body.data.email + " has logged in") 
-          return true
+          console.log(response.body.data)
+          return response.body.data
         }else return false        
       })     
     )
@@ -120,25 +125,36 @@ export class ServerApiService {
     );      
   } 
 
-  createCustomer(customer:createCustomerRequest):Observable<createCustomerResponse>{
+  createCustomer(customer:createCustomerRequest):Observable<serverResponse>{
     let options =  this.generateRequestOptions()
-    return this.http.post<createCustomerResponse>(this.BASE_URL + "customers",customer,options).pipe(
+    return this.http.post<serverResponse>(this.BASE_URL + "customers",customer,options).pipe(
       map(response=>{
         return response; 
       })
     ); 
   }
+  deleteCustomer(customerId:string){
+    let options =  this.generateRequestOptions()
+    console.log("customer id to delete: "+ customerId)
+    console.log(this.BASE_URL + `customers/${customerId}`)
+    return this.http.delete<serverResponse>(this.BASE_URL + `customers/${customerId}`,options).pipe(
+      map(response=>{
+        return response;     
+      })     
+    ); 
+  }
 
   getActivityTypes():Observable<{}>{
     let options =  this.generateRequestOptions()
-    return this.http.get<createCustomerResponse>(this.BASE_URL + "customers/activityTypes",options).pipe(
+    
+    return this.http.get<serverResponse>(this.BASE_URL + "customers/activityTypes",options).pipe(
       map(response=>{
         if(response.status === "success"){
           return response.data.value as {}
         }else{
           return {};
         }
-      })
+      })      
     );
   }
 }

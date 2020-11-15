@@ -1,4 +1,4 @@
-import { Component, OnInit,ViewEncapsulation } from '@angular/core';
+import { Component, OnInit,ViewChild } from '@angular/core';
 
 
 @Component({
@@ -7,11 +7,14 @@ import { Component, OnInit,ViewEncapsulation } from '@angular/core';
   styleUrls: ['./table-filter.component.scss']
 })
 export class TableFilterComponent implements OnInit {
+ 
+
   value = '';
 
   constructor() { }
 
   ngOnInit(): void {
+ 
   }
 
 }
