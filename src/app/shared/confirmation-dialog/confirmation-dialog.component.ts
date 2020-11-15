@@ -13,6 +13,11 @@ export class ConfirmationDialogComponent implements OnInit {
   public confirmMessage:string;
 
   ngOnInit(): void {
+    this.setPosition();
+  }
+
+  setPosition(){
+    this.dialogRef.updatePosition({top:"50px"})
   }
 
 }

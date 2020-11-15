@@ -11,6 +11,7 @@ import { ServerApiService, User} from '../server-api.service';
 export class AuthService {
   isLoggedIn:boolean = false;
   userId:number = -1;
+  userName:string = "";
 
   redirectUrl: string;
 
@@ -23,10 +24,15 @@ export class AuthService {
   login(user:User): Observable<boolean> {
     return this.serverApi.logIn(user).pipe(map(val=>{
       if(typeof val === "boolean"){
+        this.isLoggedIn = false;
+        this.userId = -1;
+        this.userName = "";
+
         return false;
       }else{
         this.isLoggedIn = true;
         this.userId = val.id;
+        this.userName = val.email;
         return true;
       }           
     }));  

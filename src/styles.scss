@@ -5,11 +5,31 @@
 
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
+// @import "../node_modules/bootstrap/scss/functions";
+// @import "../node_modules/bootstrap/scss/variables";
+// @import "../node_modules/bootstrap/scss/mixins";
+// @import "../node_modules/bootstrap/scss/buttons";
+// @import "../node_modules/bootstrap/scss/nav";
+// @import "../node_modules/bootstrap/scss/navbar";
+// @import "../node_modules/bootstrap/scss/reboot";
+// @import "../node_modules/bootstrap/scss/grid";
+// @import "../node_modules/bootstrap/scss/utilities";
+
+@import "./my-reset.scss";
+
+@import "../node_modules/@fortawesome/fontawesome-free/css/all.css";
+
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 
 //allows vertical scrolling on dialog 
 .cdk-global-overlay-wrapper{
+  overflow: visible;
   overflow:scroll;
+}
+
+.edit-customer-panel { 
+  max-width: 800px !important; 
+  width:75%; 
 }

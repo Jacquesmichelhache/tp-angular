@@ -18,10 +18,18 @@ import { NewCustomerDialogComponent } from './new-customer-dialog/new-customer-d
 
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
+import { EditDialogComponent } from './edit-dialog/edit-dialog.component';
+import { EditFormComponent } from './edit-form/edit-form.component';
+import { ContactsComponent } from './contacts/contacts.component';
+import { NewContactDialogComponent } from './contacts/new-contact-dialog/new-contact-dialog.component';
+import { EditContactDialogComponent } from './contacts/edit-contact-dialog/edit-contact-dialog.component';
+import { EditContactFormComponent } from './contacts/edit-contact-form/edit-contact-form.component';
+import { NewContactFormComponent } from './contacts/new-contact-form/new-contact-form.component';
+import { EditDialogTabComponent } from './edit-dialog-tab/edit-dialog-tab.component';
 
 
 @NgModule({
-  declarations: [CustomersComponent, CustomersTableComponent, TableFilterComponent, TableHeaderComponent, NewCustomerBtnComponent, NewCustomerFormComponent, NewCustomerDialogComponent],
+  declarations: [CustomersComponent, CustomersTableComponent, TableFilterComponent, TableHeaderComponent, NewCustomerBtnComponent, NewCustomerFormComponent, NewCustomerDialogComponent, EditDialogComponent, EditFormComponent, ContactsComponent, NewContactDialogComponent, EditContactDialogComponent, EditContactFormComponent, NewContactFormComponent, EditDialogTabComponent],
   imports: [
     DemoMaterialModule,
     CommonModule,

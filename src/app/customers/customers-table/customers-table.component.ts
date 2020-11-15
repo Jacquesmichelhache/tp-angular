@@ -9,6 +9,7 @@ import {ConfirmationDialogComponent} from '../../shared/confirmation-dialog/conf
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import { CustomersTableService } from '../customers-table.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {EditDialogComponent} from '../edit-dialog/edit-dialog.component'
 
 
 
@@ -25,7 +26,8 @@ interface tableState {
   styleUrls: ['./customers-table.component.scss']
 })
 export class CustomersTableComponent implements OnInit {
-  dialogRef: MatDialogRef<ConfirmationDialogComponent>
+  deleteDialogRef: MatDialogRef<ConfirmationDialogComponent>
+  editDialogRef: MatDialogRef<EditDialogComponent>
 
   constructor(private serverApi:ServerApiService, 
     private authService: AuthService,
@@ -52,9 +54,9 @@ export class CustomersTableComponent implements OnInit {
   }
 
   async deleteButtonCallback(params){
-    this.dialogRef = this.dialog.open(ConfirmationDialogComponent, {disableClose:false});
-    this.dialogRef.componentInstance.confirmMessage = "Are you sure you want to delete?";
-    this.dialogRef.afterClosed().subscribe(result =>{
+    this.deleteDialogRef = this.dialog.open(ConfirmationDialogComponent, {disableClose:false});
+    this.deleteDialogRef.componentInstance.confirmMessage = "Are you sure you want to delete?";
+    this.deleteDialogRef.afterClosed().subscribe(result =>{
       if(result){
         this.serverApi.deleteCustomer(params.data.id).subscribe(response=>{
           if(response.status === "success"){
@@ -68,11 +70,17 @@ export class CustomersTableComponent implements OnInit {
         })
        
       }
-      this.dialogRef = null;
+      this.deleteDialogRef = null;
     });
   }
   async ediButtonCallback(params){
-
+    this.editDialogRef = this.dialog.open(EditDialogComponent, {disableClose:false});
+    this.editDialogRef.componentInstance.customerId = params.data.id;
+    this.editDialogRef.afterClosed().subscribe(result =>{
+      if(result){
+        this.refreshTable();  
+      }
+    })
   }
 
   defaultColumnDefs = {
@@ -92,7 +100,7 @@ export class CustomersTableComponent implements OnInit {
     {headerName:"Start Date", field: 'relationshipstart', valueFormatter:this.dateFormatter, comparator:this.dateComparator },
     {headerName:"Activity Type", field: 'activitytype'},
     {headerName:"E-mail", field: 'infoemail'},
-    {headerName:"",width:120, cellRenderer:"ControlsCellRenderer", pinned:"left", lockPosition:true,
+    {headerName:"",width:90, cellRenderer:"ControlsCellRenderer", pinned:"left", lockPosition:true,
       resizable:false,filter:false,sortable:false,flex:2, cellStyle:{padding:"0px",margin:"0px"}}
   ];
 

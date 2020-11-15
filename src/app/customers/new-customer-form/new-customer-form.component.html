@@ -1,6 +1,6 @@
 
-<div class="alert">{{errorMessage}}</div>
-<div class="alert" *ngFor="let msg of errors">{{msg}}</div>
+<div class="my-alert">{{errorMessage}}</div>
+<div class="my-alert" *ngFor="let msg of errors">{{msg}}</div>
 
 <form [formGroup]="newCutomerForm" (ngSubmit)="onSubmit()" class="customer-form">
   <p>

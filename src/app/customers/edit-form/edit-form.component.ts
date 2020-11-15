@@ -8,24 +8,29 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 
 import { MatDialogRef } from '@angular/material/dialog';
 
-
 @Component({
-  selector: 'app-new-customer-form',
-  templateUrl: './new-customer-form.component.html',
-  styleUrls: ['./new-customer-form.component.scss']
+  selector: 'app-edit-form',
+  templateUrl: './edit-form.component.html',
+  styleUrls: ['./edit-form.component.scss']
 })
-export class NewCustomerFormComponent implements OnInit {
+export class EditFormComponent implements OnInit {
+  constructor(private serverApi: ServerApiService, 
+    public dialogRef: MatDialogRef<NewCustomerDialogComponent>,
+    private _snackBar: MatSnackBar) { }
+
+  dataHasLoaded:boolean = false;
+
   errorMessage:string = ""
   errors:string[]= [];
 
-  activityTypes:any[] =[];
-
   clicked:boolean = false;
+
+  activityTypes:any[] =[];
 
   VALID_EMAIL_REGEX = new RegExp(/[\w+\-.]+@[a-z\d\-.]+\.[a-z]/i);
   VALID_AREACODE_REGEX = new RegExp( /[ABCEGHJKLMNPRSTVXY]{1}\d{1}[A-Z]{1}[ -]?\d{1}[A-Z]{1}\d{1}/i)
 
-  newCutomerForm = new FormGroup({
+  editCutomerForm = new FormGroup({
     name : new FormControl('',Validators.required),
     relationshipstart : new FormControl('',Validators.required),
     activitytype : new FormControl('',Validators.required),
@@ -36,46 +41,18 @@ export class NewCustomerFormComponent implements OnInit {
     infoemail : new FormControl('',[Validators.required, testValidatorFactory(this.VALID_EMAIL_REGEX)])
   });
 
-  constructor(private serverApi: ServerApiService, 
-    public dialogRef: MatDialogRef<NewCustomerDialogComponent>,
-    private _snackBar: MatSnackBar) { }
+
 
   ngOnInit(): void {
     let self = this;
+
+    this.editCutomerForm.disable();
+
     this.serverApi.getActivityTypes().subscribe(types=>{
       Object.entries(types).forEach(entry=>{
         self.activityTypes.push(entry);
       })  
     });
   }
-
-  onSubmit(){
-    this.clicked = true;
-
-    this.errors = [];
-    this.errorMessage = "";
-    let self = this;
-    let newCustomer = this.newCutomerForm.value  
-
-    this.serverApi.createCustomer(newCustomer).subscribe(response=>{     
-
-      if(response.status === "error"){
-        this.clicked = false;
-
-        this.errorMessage = response.data.message
-
-        if(response.data.value != null){
-
-          Object.entries(response.data.value).forEach(error=>{
-            
-            this.errors.push(error[1].toString())
-          })
-        }
-      }else{
-        this._snackBar.open("Successfully created a Customer!", "Good job",{duration:2000})
-        this.dialogRef.close(true);
-      }  
-    });
-  } 
 
 }

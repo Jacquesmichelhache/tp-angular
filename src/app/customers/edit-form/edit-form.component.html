@@ -1,0 +1,80 @@
+<div class="d-flex flex-column align-items-center" style="max-width: 400px;width:100%">
+
+  <div *ngIf="!dataHasLoaded">
+    <mat-spinner [diameter]="20"></mat-spinner>
+  </div>
+
+
+
+  <div class="my-alert">{{errorMessage}}</div>
+  <div class="my-alert" *ngFor="let msg of errors">{{msg}}</div>
+
+  <form [formGroup]="editCutomerForm" (ngSubmit)="onSubmit()" class="customer-form">
+    <p>
+      <mat-form-field appearance="standard">
+        <mat-label>Name</mat-label>
+        <input matInput placeholder="" formControlName="name" required>           
+      </mat-form-field>
+    </p>
+
+    <p>
+      <mat-form-field appearance="standard">
+        <mat-label>Start Date</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="relationshipstart" required>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>        
+      </mat-form-field>
+    </p>
+
+    <mat-form-field appearance="standard">
+      <mat-label>Activity Type</mat-label>
+      <mat-select formControlName="activitytype" required>
+        <mat-option *ngFor="let activity of activityTypes" [value]="activity[0]">
+          {{activity[1]}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <p>
+      <mat-form-field appearance="standard">
+        <mat-label>City</mat-label>
+        <input matInput placeholder="" formControlName="addresscity">           
+      </mat-form-field>
+    </p> 
+
+    <p>
+      <mat-form-field appearance="standard">
+        <mat-label> Postal Code</mat-label>
+        <input matInput placeholder="" formControlName="addresspostalcode">           
+      </mat-form-field>
+    </p> 
+    
+    <p>
+      <mat-form-field appearance="standard">
+        <mat-label>Street</mat-label>
+        <input matInput placeholder="" formControlName="addressstreet">           
+      </mat-form-field>
+    </p> 
+
+    <p>
+      <mat-form-field appearance="standard">
+        <mat-label>Apt.</mat-label>
+        <input matInput placeholder="" formControlName="addressapt" maxlength="12">           
+      </mat-form-field>
+    </p> 
+
+    <p>
+      <mat-form-field appearance="standard">
+        <mat-label>E-mail</mat-label>
+        <input matInput placeholder="" formControlName="infoemail" required>           
+      </mat-form-field>
+    </p>   
+
+    
+    <button mat-raised-button type="submit" [disabled]="!editCutomerForm.valid || clicked">Update</button>  
+  </form>
+
+</div>
+
+
+

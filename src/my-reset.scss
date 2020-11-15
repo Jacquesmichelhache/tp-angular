@@ -1,0 +1,6 @@
+
+//prevents bootstrap from styling angular/material elements
+button:focus, button:active {
+  outline:none !important;
+  box-shadow:none;
+}

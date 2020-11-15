@@ -10,6 +10,9 @@ export function editRowComponent(deleteCallback, editCallback){
     let editButtonIcon = document.createElement("i");
     
     //styling   
+    wrap.className = "d-flex flex-row align-items-center justify-content-around"
+    wrap.style.height = "100%";
+
     deleteButtonIcon.className = "fas fa-trash-alt"
     deleteButtonIcon.title = "edit customer information"
     deleteButton.className = "btn btn-sm btn-dark"
@@ -18,10 +21,7 @@ export function editRowComponent(deleteCallback, editCallback){
     editButtonIcon.className = "fas fa-edit"
 
     editButton.style.margin = "3px";
-    deleteButton.style.margin = "3px";   
-
-    editButton.textContent = "edit";
-    deleteButton.textContent = "delete";
+    deleteButton.style.margin = "3px";     
 
     //events
     deleteButton.addEventListener("click",async (e)=>{

@@ -19,6 +19,8 @@ import {MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldModule} from '@angular/mater
 import { MatInputModule} from '@angular/material/input';
 import { ConfirmationDialogComponent } from './shared/confirmation-dialog/confirmation-dialog.component';
 
+import { FlexLayoutModule } from '@angular/flex-layout';
+
 
 @NgModule({
   declarations: [
@@ -32,7 +34,8 @@ import { ConfirmationDialogComponent } from './shared/confirmation-dialog/confir
     DemoMaterialModule,  
     CustomersModule,
     AuthModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FlexLayoutModule
   ],  
   providers: [
     //{ provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } },

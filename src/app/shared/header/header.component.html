@@ -1,6 +1,34 @@
-<mat-toolbar>
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+  <a class="navbar-brand">Precicom - TP</a>
+ 
+   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+     <span class="navbar-toggler-icon"></span>
+   </button>
+ 
+   <div class="collapse navbar-collapse" id="navbarTogglerDemo01">   
+    
+     <ul class="navbar-nav ml-auto mt-2 mt-lg-0">  
+
+ 
+       <li class="nav-item active">       
+         <div style="color:white;max-width: 150px;text-overflow: ellipsis;overflow: hidden; margin-right: 10px;" class="header-username" *ngIf="authService.isLoggedIn">{{authService.userName}}</div>
+       </li>
+ 
+       <li class="nav-item active">       
+        <a (click)="login()"  *ngIf="!authService.isLoggedIn">Login</a>
+        <a (click)="logout()" *ngIf="authService.isLoggedIn">Logout</a>
+       </li>
+     
+ 
+     </ul>
+   </div>
+ </nav>
+
+
+
+<!-- <mat-toolbar>
   <span>Precicom - tp</span>
   <span class="example-spacer"></span>
   <button (click)="login()"  *ngIf="!authService.isLoggedIn">Login</button>
   <button (click)="logout()" *ngIf="authService.isLoggedIn">Logout</button>
-</mat-toolbar>
+</mat-toolbar> -->
