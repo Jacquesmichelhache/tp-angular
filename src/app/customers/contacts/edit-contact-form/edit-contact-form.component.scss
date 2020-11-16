@@ -1,0 +1,36 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 24px;
+}
+
+.contact-form {
+  width:100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.contact-form > *, .contact-form mat-form-field {
+  width:100%
+}
+
+label {
+  display: block;
+  width: 100%;
+  margin: .5em 0;
+  color: #607D8B;
+  font-weight: bold;
+}
+
+input {
+  width:100%;
+  height: 2em;
+  font-size: 1em;
+  padding-left: .4em;
+}
+
+.my-alert {
+  color:red;
+}

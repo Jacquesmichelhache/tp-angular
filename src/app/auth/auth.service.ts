@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { Observable, of } from 'rxjs';
 import { tap, delay,map } from 'rxjs/operators';
-import { ServerApiService, User} from '../server-api.service';
+import { ServerApiService, User,SignUpInfo, serverResponse, successSignup , failSignup} from '../server-api.service';
 
 
 @Injectable({
@@ -23,6 +23,7 @@ export class AuthService {
 
   login(user:User): Observable<boolean> {
     return this.serverApi.logIn(user).pipe(map(val=>{
+      console.log(val);
       if(typeof val === "boolean"){
         this.isLoggedIn = false;
         this.userId = -1;
@@ -36,6 +37,26 @@ export class AuthService {
         return true;
       }           
     }));  
+  }
+
+  signup(signUpInfo:SignUpInfo): Observable<successSignup | failSignup>{
+    return this.serverApi.signup(signUpInfo).pipe(
+      map(response=>{
+
+      if(response.status === "error"){
+        this.isLoggedIn = false;
+        this.userId = -1;
+        this.userName = "";      
+      }       
+
+      if(response.status === "success"){
+        this.isLoggedIn = true;
+        this.userId = response.data.value.id;
+        this.userName = response.data.value.email;
+      }
+
+      return response;  
+    })); 
   }
 
   logout(): Observable<boolean> {

@@ -8,13 +8,21 @@ export class CustomersTableService {
 
   constructor() { }
 
-  private refreshTableSource = new Subject<boolean>();
   selectedCustomerId:number = -1;
-  
+
+  private refreshTableSource = new Subject<boolean>();  
+  private filterTableSource = new Subject<string>();
+
+
   refreshTable$ = this.refreshTableSource.asObservable();
+  filterTable$ = this.filterTableSource.asObservable();
 
   refreshTable(){
     this.refreshTableSource.next(true);
+  }
+
+  filterTable(fitlerValue:string = ""){
+    this.filterTableSource.next(fitlerValue)
   }
 
 }

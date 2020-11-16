@@ -32,8 +32,7 @@ export class EditFormComponent implements OnInit {
   clicked:boolean = false;
 
   activityTypes:any[] =[];
-
-  VALID_EMAIL_REGEX = new RegExp(/[\w+\-.]+@[a-z\d\-.]+\.[a-z]/i);
+  
   VALID_AREACODE_REGEX = new RegExp( /[ABCEGHJKLMNPRSTVXY]{1}\d{1}[A-Z]{1}[ -]?\d{1}[A-Z]{1}\d{1}/i)
 
   editCutomerForm = new FormGroup({
@@ -44,7 +43,7 @@ export class EditFormComponent implements OnInit {
     addresspostalcode : new FormControl('', testValidatorFactory(this.VALID_AREACODE_REGEX)),
     addressstreet : new FormControl(''),
     addressapt : new FormControl('', Validators.maxLength(12)),
-    infoemail : new FormControl('',[Validators.required, testValidatorFactory(this.VALID_EMAIL_REGEX)])
+    infoemail : new FormControl('',[Validators.required,Validators.email ])
   });
 
 
@@ -107,10 +106,7 @@ export class EditFormComponent implements OnInit {
    
 
     this.serverApi.updateCustomerInformation(id,customerInformation).subscribe(response=>{
-      if(response.status === "success"){
-
-       
-
+      if(response.status === "success"){  
 
         setTimeout(()=>{
           this.customerIsSaving = false;

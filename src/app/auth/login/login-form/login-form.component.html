@@ -1,15 +1,30 @@
-<form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
-  <label>
-    email:
-    <input type="text" formControlName="email">
-  </label>
+<h2>Welcome!</h2>
+
+
+<div *ngIf="invalidLogin" class="alert alert-danger">E-mail or password is invalid</div>
+
+<form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="login-form">
+
+  <p>
+    <mat-form-field appearance="standard">
+      <mat-label>E-mail:</mat-label>
+      <input matInput placeholder="" formControlName="email">           
+    </mat-form-field>
+  </p> 
+
+  <p>
+    <mat-form-field appearance="standard">
+      <mat-label> Password:</mat-label>
+      <input type="password" matInput placeholder="password" formControlName="password">           
+    </mat-form-field>
+  </p> 
+
   
-  <label>
-    password:
-    <input type="text" formControlName="password">
-  </label>
-  
-  <button type="submit" [disabled]="!profileForm.valid">Submit</button>  
+  <button mat-raised-button type="submit" [disabled]="!profileForm.valid">Submit</button>  
+
+  <div class="d-flex flex-row flex-row-reverse align-items-center" style="margin-top: 20px;">
+    <div class="signup-link" routerLink="auth/signup">Sign up</div>
+  </div>
 </form>
 
 

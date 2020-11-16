@@ -9,12 +9,20 @@ export class ContactsTableService {
 
   constructor() { }
 
-  private refreshTableSource = new Subject<boolean>();
   selectedContactId:number = -1;
-  
+
+  private refreshTableSource = new Subject<boolean>();
+  private filterTableSource = new Subject<string>(); 
+
+
+  filterTable$ = this.filterTableSource.asObservable();  
   refreshTable$ = this.refreshTableSource.asObservable();
 
   refreshTable(){
     this.refreshTableSource.next(true);
+  }
+
+  filterTable(fitlerValue:string = ""){
+    this.filterTableSource.next(fitlerValue)
   }
 }

@@ -29,6 +29,7 @@ import { NewContactFormComponent } from './contacts/new-contact-form/new-contact
 import { EditDialogTabComponent } from './edit-dialog-tab/edit-dialog-tab.component';
 import { ContactsTableComponent } from './contacts/contacts-table/contacts-table.component';
 import { NewContactBtnComponent } from './contacts/new-contact-btn/new-contact-btn.component';
+import { ContactsFilterComponent } from './contacts/contacts-filter/contacts-filter.component';
 
 
 @NgModule({
@@ -38,7 +39,7 @@ import { NewContactBtnComponent } from './contacts/new-contact-btn/new-contact-b
      NewCustomerDialogComponent, EditDialogComponent, 
      EditFormComponent, ContactsComponent, NewContactDialogComponent, 
      EditContactDialogComponent, EditContactFormComponent, NewContactFormComponent, 
-     EditDialogTabComponent, ContactsTableComponent, NewContactBtnComponent],
+     EditDialogTabComponent, ContactsTableComponent, NewContactBtnComponent, ContactsFilterComponent],
   imports: [
     DemoMaterialModule,
     CommonModule,

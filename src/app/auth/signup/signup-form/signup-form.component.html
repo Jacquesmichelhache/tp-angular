@@ -1,0 +1,41 @@
+
+
+<div class="my-alert">{{errorMessage}}</div>
+<div class="my-alert" *ngFor="let msg of errors">{{msg}}</div>
+
+<form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="signup-form">
+
+  <p>
+    <mat-form-field appearance="standard">
+      <mat-label>E-mail:</mat-label>
+      <input matInput placeholder="" formControlName="email">  
+      <mat-error *ngIf="checkError('email','email')">email must be of valid format</mat-error>         
+    </mat-form-field>
+  </p> 
+
+  <p>
+    <mat-form-field appearance="standard">
+      <mat-label> Password:</mat-label>
+      <input type="password" matInput placeholder="password" formControlName="password">
+      <mat-error *ngIf="checkError('password','required')">password is required</mat-error>  
+      <mat-error *ngIf="checkError('password','minlength')">password must contain at least 6 characters</mat-error>               
+    </mat-form-field>
+  </p> 
+
+  <p>
+    <mat-form-field appearance="standard">
+      <mat-label>Confirm Password:</mat-label>
+      <input type="password" matInput placeholder="password" formControlName="password_confirmation"> 
+      <mat-error *ngIf="checkError('password_confirmation','required')">confirmation is required</mat-error>
+      <mat-error *ngIf="checkError('password_confirmation','minlength')">password must contain at at least 6 characters</mat-error>   
+      <mat-error *ngIf="checkError('password_confirmation','mustMatch')">confirmation must match password</mat-error>   
+    </mat-form-field>
+  </p> 
+
+  
+  <button mat-raised-button type="submit" [disabled]="!signupForm.valid">Submit</button>  
+
+  <div class="d-flex flex-row flex-row-reverse align-items-center" style="margin-top: 30px;">
+    <div class="login-link" routerLink="auth/login">Login</div>
+  </div>
+</form>

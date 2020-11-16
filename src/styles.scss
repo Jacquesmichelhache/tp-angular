@@ -31,5 +31,13 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .edit-customer-panel { 
   max-width: 800px !important; 
+  min-width:400px !important;
   width:75%; 
 }
+
+.edit-contact-panel { 
+  max-width: 600px !important; 
+  min-width:300px !important;
+  width:30%; 
+}
+

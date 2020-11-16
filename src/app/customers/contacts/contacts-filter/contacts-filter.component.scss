@@ -1,0 +1,12 @@
+.filter {
+  width: 200px;
+}
+
+::ng-deep .mat-form-field-wrapper{
+  margin-bottom: -1em; 
+}
+
+
+.mat-input-wrapper {
+  background-color: red;
+}

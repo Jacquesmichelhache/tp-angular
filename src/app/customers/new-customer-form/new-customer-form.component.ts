@@ -22,7 +22,7 @@ export class NewCustomerFormComponent implements OnInit {
 
   clicked:boolean = false;
 
-  VALID_EMAIL_REGEX = new RegExp(/[\w+\-.]+@[a-z\d\-.]+\.[a-z]/i);
+  
   VALID_AREACODE_REGEX = new RegExp( /[ABCEGHJKLMNPRSTVXY]{1}\d{1}[A-Z]{1}[ -]?\d{1}[A-Z]{1}\d{1}/i)
 
   newCutomerForm = new FormGroup({
@@ -33,7 +33,7 @@ export class NewCustomerFormComponent implements OnInit {
     addresspostalcode : new FormControl('', testValidatorFactory(this.VALID_AREACODE_REGEX)),
     addressstreet : new FormControl(''),
     addressapt : new FormControl('', Validators.maxLength(12)),
-    infoemail : new FormControl('',[Validators.required, testValidatorFactory(this.VALID_EMAIL_REGEX)])
+    infoemail : new FormControl('',[Validators.required,Validators.email])
   });
 
   constructor(private serverApi: ServerApiService, 

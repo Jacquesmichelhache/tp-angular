@@ -9,7 +9,8 @@ import {ConfirmationDialogComponent} from '../../../shared/confirmation-dialog/c
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import { ContactsTableService } from '../contacts-table.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {EditDialogComponent} from '../../edit-dialog/edit-dialog.component'
+import {EditContactDialogComponent} from '../edit-contact-dialog/edit-contact-dialog.component'
+import { CustomersTableService } from '../../customers-table.service';
 
 interface tableState {
   colState:any,
@@ -26,13 +27,14 @@ interface tableState {
 })
 export class ContactsTableComponent implements OnInit {
   deleteDialogRef: MatDialogRef<ConfirmationDialogComponent>
-  editDialogRef: MatDialogRef<EditDialogComponent>
+  editDialogRef: MatDialogRef<EditContactDialogComponent>
 
   constructor(private serverApi:ServerApiService, 
     private authService: AuthService,
     public dialog:MatDialog,
     private ContactsTableService:ContactsTableService,
-    private _snackBar: MatSnackBar) { }
+    private _snackBar: MatSnackBar,
+    private customersTableService:CustomersTableService) { }
 
   @ViewChild('agGridContacts') agGrid: AgGridAngular;
   tableStateId:string = "contacts-tablestate-user-";
@@ -45,6 +47,11 @@ export class ContactsTableComponent implements OnInit {
     this.ContactsTableService.refreshTable$.subscribe(()=>{      
       this.refreshTable();
     });
+
+    this.ContactsTableService.filterTable$.subscribe(filterValue=>{
+      if(this.agGrid) this.agGrid.gridOptions.api.setQuickFilter(filterValue);
+    });
+
   }
 
   refreshTable(){
@@ -56,14 +63,14 @@ export class ContactsTableComponent implements OnInit {
     this.deleteDialogRef.componentInstance.confirmMessage = "Are you sure you want to delete?";
     this.deleteDialogRef.afterClosed().subscribe(result =>{
       if(result){
-        this.serverApi.deleteCustomer(params.data.id).subscribe(response=>{
+        this.serverApi.deleteContact(this.customersTableService.selectedCustomerId,params.data.id).subscribe(response=>{
           if(response.status === "success"){
             this.refreshTable();   
-            this._snackBar.open("Successfully deleted a Customer!", "Good job",{duration:2000})
+            this._snackBar.open("Successfully deleted a Contact!", "Good job",{duration:2000})
           }else if(response.status === "error")   {
             this._snackBar.open(response.data.message, "Error",{duration:2000})
           } else{
-            this._snackBar.open("Could not delete customer for unknown reason", "Fatal error",{duration:2000})
+            this._snackBar.open("Could not delete contact for unknown reason", "Fatal error",{duration:2000})
           }  
         })
        
@@ -74,8 +81,8 @@ export class ContactsTableComponent implements OnInit {
   async editButtonCallback(params){
     this.ContactsTableService.selectedContactId = params.data.id;
 
-    this.editDialogRef = this.dialog.open(EditDialogComponent, {disableClose:false});
-    this.editDialogRef.componentInstance.customerId = params.data.id;
+    this.editDialogRef = this.dialog.open(EditContactDialogComponent, {disableClose:false});
+    this.editDialogRef.componentInstance.contactId = params.data.id;
     this.editDialogRef.afterClosed().subscribe(result =>{
         this.refreshTable();      
     })
@@ -147,24 +154,24 @@ export class ContactsTableComponent implements OnInit {
   }
 
   getContacts(){
-    this.rowData =  this.serverApi.getContacts().pipe(
-      map(contacts=>{   
-        
-        console.log(contacts)
+    this.rowData =  this.serverApi.getContacts(this.customersTableService.selectedCustomerId).pipe(
+      map(response=>{   
+        if(response.status === "success"){
+          let contacts = response.data.value
 
-        let agGridRows = contacts.map(contact=>{
-          return {
-            'id':contact.id,
-            'name':contact.name, 
-            'firstname':contact.firstname, 
-            'ext': contact.ext,
-            'email':contact.email ,
-            'tel':contact.tel 
-          }
-        });
+          let agGridRows = contacts.map(contact=>{
+            return {
+              'id':contact.id,
+              'name':contact.name, 
+              'firstname':contact.firstname, 
+              'ext': contact.ext,
+              'email':contact.email ,
+              'tel':contact.tel 
+            }
+          });
 
-        return agGridRows;     
-
+          return agGridRows;    
+        } 
       }),
       catchError(err=>of([]))      
     );     

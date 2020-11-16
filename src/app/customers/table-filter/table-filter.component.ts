@@ -1,4 +1,5 @@
 import { Component, OnInit,ViewChild } from '@angular/core';
+import { CustomersTableService } from '../customers-table.service';
 
 
 @Component({
@@ -11,10 +12,14 @@ export class TableFilterComponent implements OnInit {
 
   value = '';
 
-  constructor() { }
+  constructor(private customersTableService:CustomersTableService) { }
 
   ngOnInit(): void {
  
+  }
+
+  onChange(filterValue:string){   
+    this.customersTableService.filterTable(filterValue);
   }
 
 }

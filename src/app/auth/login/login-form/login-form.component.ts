@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { MatDialogRef } from '@angular/material/dialog';
 import { loginDialogComponent} from '../login.component';
 
+
 @Component({
   selector: 'app-login-form',
   templateUrl: './login-form.component.html',
@@ -25,10 +26,13 @@ export class LoginFormComponent implements OnInit {
     this.profileForm.setValue({email:"jacques_m16@hotmail.com",password:"123456"})
   }
 
+  invalidLogin:boolean = false
+
   ngOnInit(): void {
   }
 
   onSubmit(){
+    this.invalidLogin = false;
     let self = this;
     let user:User = this.profileForm.value   
    
@@ -36,9 +40,12 @@ export class LoginFormComponent implements OnInit {
     this.authService.login(user).subscribe(val=>{
       
       if(val === true){  
-      
+        this.invalidLogin = false;
         this.router.navigate([self.authService.redirectUrl || "/customers"]);  
         this.dialogRef.close(val)
+      }else{
+        this.invalidLogin = true;
+
       }
     });
 

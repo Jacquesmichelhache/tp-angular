@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import { NavigationStart, Router, RouterEvent } from '@angular/router';
+import { filter } from 'rxjs/operators';
+
 
 
 
@@ -11,7 +13,7 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(public dialog: MatDialog,  private router: Router) {
+  constructor(public dialog: MatDialog) {
     this.openDialog();
    }
 
@@ -34,8 +36,24 @@ export class LoginComponent implements OnInit {
   selector: 'login-dialog',
   templateUrl: './login-dialog.component.html',
 })
-export class loginDialogComponent {
+export class loginDialogComponent implements OnInit {
 
-  constructor(public dialogRef: MatDialogRef<loginDialogComponent>) {}  
- 
+  constructor(public dialogRef: MatDialogRef<loginDialogComponent>,
+    private router:Router) {}  
+
+  routerSubscription = null;
+
+  ngOnInit() {
+
+  //to close dialog on navigation
+  this.routerSubscription = this.router.events
+    .pipe(
+      filter((event: RouterEvent) => event instanceof NavigationStart),
+      filter(() => !!this.dialogRef)
+    )
+    .subscribe(() => {
+      this.dialogRef.close();
+    });
+  }
+
 }

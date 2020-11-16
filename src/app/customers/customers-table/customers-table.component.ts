@@ -47,6 +47,10 @@ export class CustomersTableComponent implements OnInit {
     this.customersTableService.refreshTable$.subscribe(()=>{      
       this.refreshTable();
     });
+
+    this.customersTableService.filterTable$.subscribe(filterValue=>{
+      if(this.agGrid) this.agGrid.gridOptions.api.setQuickFilter(filterValue);
+    });
   }
 
   refreshTable(){
@@ -87,7 +91,8 @@ export class CustomersTableComponent implements OnInit {
     filter:true,
     sortable:true,
     resizable:true,
-    flex:2
+    flex:2,
+    minWidth:150
   }
 
   tableComponents = {
@@ -100,7 +105,7 @@ export class CustomersTableComponent implements OnInit {
     {headerName:"Start Date", field: 'relationshipstart', valueFormatter:this.dateFormatter, comparator:this.dateComparator },
     {headerName:"Activity Type", field: 'activitytype'},
     {headerName:"E-mail", field: 'infoemail'},
-    {headerName:"",width:90, cellRenderer:"ControlsCellRenderer", pinned:"left", lockPosition:true,
+    {headerName:"",width:90,minWidth:50, cellRenderer:"ControlsCellRenderer", pinned:"left", lockPosition:true,
       resizable:false,filter:false,sortable:false,flex:2, cellStyle:{padding:"0px",margin:"0px"}}
   ];
 

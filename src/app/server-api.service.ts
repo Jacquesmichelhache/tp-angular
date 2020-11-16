@@ -1,13 +1,20 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { tap, map, catchError} from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
+
 
 export interface UserParams {
   url:string,
   method?:string,
   redirect_url?:string,
   params?:{}
+}
+
+export interface SignUpInfo {
+  email:string,
+  password:string,
+  confirm_password:string
 }
 
 export interface User {
@@ -23,11 +30,16 @@ export interface Status {
 }
 
 export interface LogInResponse {
-  data:User,
-  status: Status
+  status:"error" | "success",
+  data: {
+    message:string,
+    value:User}
 }
 export interface LogOutResponse{
-  status:Status
+  status:"error" | "success",
+  data: {
+    message:string,
+    value:any}
 }
 
 export interface Customer {
@@ -53,8 +65,30 @@ export interface CustomersResponse {
   data:Customer[]
 }
 export interface getContactsResponse {
-  status:Status,
-  data:Contact[]
+  status:"error" | "success",
+  data: {
+    message:string,
+    value:Contact[]
+  }
+}
+
+export interface successSignup {
+  status:"success"
+  data:{
+    message:string,
+    value:{
+      email:string,
+      id:number
+    }
+  }
+
+}
+export interface failSignup{
+  status:"error",
+  data:{
+    message:string,
+    value:{}
+  }
 }
 
 export interface CustomerInformation{
@@ -105,35 +139,62 @@ export class ServerApiService {
   constructor(private http: HttpClient) { }
 
 
+  //Login/signup
   logIn(user:User):Observable<boolean | User>{
 
     return this.http.post<LogInResponse>(this.BASE_URL + "login",{user},{observe: 'response'}).pipe(
       map(response=>{
-
+      
         //if successfully logged in, set the auth_token and return true to client
-        if(response.body.status.code === 200){
+        if(response.body.status === "success"){
           let auth_token = response.headers.get("authorization")
           this.AUTHORIZATION_TOKEN = auth_token   
       
-          console.log(response.body.data.email + " has logged in") 
-          console.log(response.body.data)
-          return response.body.data
-        }else return false        
-      })     
+          console.log(response.body.data.value.email + " has logged in")         
+          return response.body.data.value
+        }else return false   
+
+      }),
+      catchError(error =>{      
+        return of(false)
+      })    
     )
   }
 
   logOut():Observable<boolean>{
     let options =  this.generateRequestOptions()
-
+    
     return this.http.delete<LogOutResponse>(this.BASE_URL + "logout",options).pipe(
       map(response=>{
-        if(response.status.code === 200){
+        if(response.status === "success"){
           console.log("User has logged out")
           return true;
         }else return false;
       })
     )     
+  }
+
+  signup(signupInfo:SignUpInfo):Observable<successSignup | failSignup>{
+   
+    return this.http.post<successSignup | failSignup>(this.BASE_URL + "signup",{user:signupInfo},{observe: 'response'}).pipe(
+      map(response=>{ 
+
+        let returnValue = response.body
+
+        if(returnValue.status === "success"){
+          let auth_token = response.headers.get("authorization")
+          this.AUTHORIZATION_TOKEN = auth_token         
+          console.log(returnValue.data.value.email + " has logged in")          
+          return returnValue
+        }else{
+          return returnValue
+        }       
+        
+      }),
+      catchError(error =>{        
+        return of({status:"error",data:{message:"",value:{}}} as failSignup)
+      })        
+    );
   }
 
   //helper method
@@ -178,9 +239,7 @@ export class ServerApiService {
   getCustomerInformation(customerId:string){
     let options =  this.generateRequestOptions()
     return this.http.get<getCustomerResponse>(this.BASE_URL + `customers/${customerId}`,options).pipe(
-      map(response=>{
-
-        console.log(response)
+      map(response=>{     
         return response;
       })
     )
@@ -211,12 +270,69 @@ export class ServerApiService {
 
 
   //Contacts API
-  getContacts():Observable<Contact[]>{    
+  getContacts(customer_id:number):Observable<getContactsResponse>{    
     let options =  this.generateRequestOptions()
-    return this.http.get<getContactsResponse>(this.BASE_URL + "customers",options).pipe(
-      map(response=>{
-        return response.data;
+
+    let params = new HttpParams().set("customer_id",customer_id.toString());  
+    options["params"] = params;   
+
+    return this.http.get<getContactsResponse>(this.BASE_URL + "contacts",options).pipe(
+      map(response=>{ 
+
+        return response;
       })
     );      
   } 
+
+  createContact(customer_id:number,contact:Contact):Observable<serverResponse>{
+    let options =  this.generateRequestOptions()
+
+    let params = new HttpParams().set("customer_id",customer_id.toString());  
+    options["params"] = params;   
+
+    return this.http.post<serverResponse>(this.BASE_URL + "contacts",contact,options).pipe(
+      map(response=>{        
+        return response; 
+      })
+    ); 
+  }
+
+  deleteContact(customer_id:number,contact_id:number){
+    let options =  this.generateRequestOptions()   
+
+    let params = new HttpParams().set("customer_id",customer_id.toString()).set("contact_id",contact_id.toString());  
+    options["params"] = params; 
+
+    return this.http.delete<serverResponse>(this.BASE_URL + `contacts/${contact_id}`,options).pipe(
+      map(response=>{      
+        return response;     
+      })     
+    ); 
+  }
+
+  getContactInformation(customer_id:number,contact_id:number){
+    let options =  this.generateRequestOptions()
+
+    let params = new HttpParams().set("customer_id",customer_id.toString()).set("contact_id",contact_id.toString());  
+    options["params"] = params; 
+
+    return this.http.get<serverResponse>(this.BASE_URL + `contacts/${contact_id}`,options).pipe(
+      map(response=>{       
+        return response;
+      })
+    )
+  }
+
+  updateContactInformation(customer_id:number,contact_id:number, contactInformation:{}){
+    let options =  this.generateRequestOptions()
+
+    let params = new HttpParams().set("customer_id",customer_id.toString()).set("contact_id",contact_id.toString());  
+    options["params"] = params; 
+
+    return this.http.patch<serverResponse>(this.BASE_URL + `contacts/${contact_id}`,contactInformation,options).pipe(
+      map(response=>{      
+        return response;
+      })
+    )
+  }
 }
