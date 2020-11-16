@@ -142,9 +142,7 @@ export class CustomersTableComponent implements OnInit {
       gridOptions.columnApi.setColumnState(state.colState)
       gridOptions.columnApi.setColumnGroupState(state.groupState)
       gridOptions.api.setSortModel(state.sortState)
-      gridOptions.api.setFilterModel(state.filterState)
-
-      console.log("table was restored")
+      gridOptions.api.setFilterModel(state.filterState)    
     }
   }
 
@@ -163,17 +161,13 @@ export class CustomersTableComponent implements OnInit {
   }
 
   onGridReady(){
-    if(this.isTablePersistent) this.restoreTableState();      
-      
-
+    if(this.isTablePersistent) this.restoreTableState(); 
   }
 
   getCustomers(){
     this.rowData =  this.serverApi.getCustomers().pipe(
-      map(customers=>{   
-        
-        //console.log(customers)
-
+      map(customers=>{           
+     
         let agGridRows = customers.map(customer=>{
           return {
             'id':customer.id,

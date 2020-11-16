@@ -144,8 +144,6 @@ export class ContactsTableComponent implements OnInit {
       gridOptions.columnApi.setColumnGroupState(state.groupState)
       gridOptions.api.setSortModel(state.sortState)
       gridOptions.api.setFilterModel(state.filterState)
-
-      console.log("contacts table was restored")
     }
   }  
 

@@ -23,7 +23,7 @@ export class AuthService {
 
   login(user:User): Observable<boolean> {
     return this.serverApi.logIn(user).pipe(map(val=>{
-      console.log(val);
+     
       if(typeof val === "boolean"){
         this.isLoggedIn = false;
         this.userId = -1;
