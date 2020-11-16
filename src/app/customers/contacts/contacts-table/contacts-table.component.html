@@ -1,0 +1,14 @@
+<ag-grid-angular
+    #agGridContacts
+    pagination
+    paginationPageSize="10"
+    paginationAutoPageSize
+    style="width: auto; height: 497px;"
+    class="ag-theme-material"
+    [rowData]="rowData | async"
+    [columnDefs]="columnDefs"
+    [components]="tableComponents"
+    [defaultColDef]="defaultColumnDefs"
+    (gridReady)="onGridReady()"
+>
+</ag-grid-angular>

@@ -12,6 +12,7 @@ import {DemoMaterialModule} from '../../app/material-module';
 import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 import { TableHeaderComponent } from './table-header/table-header.component';
+import { ContactsHeaderComponent } from './contacts/contacts-header/contacts-header.component';
 import { NewCustomerBtnComponent } from './new-customer-btn/new-customer-btn.component';
 import { NewCustomerFormComponent } from './new-customer-form/new-customer-form.component';
 import { NewCustomerDialogComponent } from './new-customer-dialog/new-customer-dialog.component';
@@ -26,10 +27,18 @@ import { EditContactDialogComponent } from './contacts/edit-contact-dialog/edit-
 import { EditContactFormComponent } from './contacts/edit-contact-form/edit-contact-form.component';
 import { NewContactFormComponent } from './contacts/new-contact-form/new-contact-form.component';
 import { EditDialogTabComponent } from './edit-dialog-tab/edit-dialog-tab.component';
+import { ContactsTableComponent } from './contacts/contacts-table/contacts-table.component';
+import { NewContactBtnComponent } from './contacts/new-contact-btn/new-contact-btn.component';
 
 
 @NgModule({
-  declarations: [CustomersComponent, CustomersTableComponent, TableFilterComponent, TableHeaderComponent, NewCustomerBtnComponent, NewCustomerFormComponent, NewCustomerDialogComponent, EditDialogComponent, EditFormComponent, ContactsComponent, NewContactDialogComponent, EditContactDialogComponent, EditContactFormComponent, NewContactFormComponent, EditDialogTabComponent],
+  declarations: [CustomersComponent, CustomersTableComponent, 
+    TableFilterComponent, TableHeaderComponent, ContactsHeaderComponent,
+    NewCustomerBtnComponent, NewCustomerFormComponent,
+     NewCustomerDialogComponent, EditDialogComponent, 
+     EditFormComponent, ContactsComponent, NewContactDialogComponent, 
+     EditContactDialogComponent, EditContactFormComponent, NewContactFormComponent, 
+     EditDialogTabComponent, ContactsTableComponent, NewContactBtnComponent],
   imports: [
     DemoMaterialModule,
     CommonModule,

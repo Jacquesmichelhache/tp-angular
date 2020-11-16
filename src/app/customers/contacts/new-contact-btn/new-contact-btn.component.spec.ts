@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CustomersTableComponent } from './customers-table.component';
+import { NewContactBtnComponent } from './new-contact-btn.component';
 
-describe('CustomersTableComponent', () => {
-  let component: CustomersTableComponent;
-  let fixture: ComponentFixture<CustomersTableComponent>;
+describe('NewContactBtnComponent', () => {
+  let component: NewContactBtnComponent;
+  let fixture: ComponentFixture<NewContactBtnComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CustomersTableComponent ]
+      declarations: [ NewContactBtnComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CustomersTableComponent);
+    fixture = TestBed.createComponent(NewContactBtnComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

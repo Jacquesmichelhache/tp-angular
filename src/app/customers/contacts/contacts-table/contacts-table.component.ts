@@ -1,17 +1,15 @@
 import { Component, OnInit,ViewChild  } from '@angular/core';
-import { ServerApiService } from '../../server-api.service';
+import { ServerApiService } from '../../../server-api.service';
 import { of, pipe } from 'rxjs';
 import { filter, map, catchError } from 'rxjs/operators';
 import { AgGridAngular } from 'ag-grid-angular';
 import { AuthService } from 'src/app/auth/auth.service';
-import {editRowComponent} from '../../shared/ag-grid-helpers/editRowComponent'
-import {ConfirmationDialogComponent} from '../../shared/confirmation-dialog/confirmation-dialog.component'
+import {editRowComponent} from '../../../shared/ag-grid-helpers/editRowComponent'
+import {ConfirmationDialogComponent} from '../../../shared/confirmation-dialog/confirmation-dialog.component'
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
-import { CustomersTableService } from '../customers-table.service';
+import { ContactsTableService } from '../contacts-table.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {EditDialogComponent} from '../edit-dialog/edit-dialog.component'
-
-
+import {EditDialogComponent} from '../../edit-dialog/edit-dialog.component'
 
 interface tableState {
   colState:any,
@@ -20,37 +18,37 @@ interface tableState {
   filterState :any
 }
 
+
 @Component({
-  selector: 'app-customers-table',
-  templateUrl: './customers-table.component.html',
-  styleUrls: ['./customers-table.component.scss']
+  selector: 'app-contacts-table',
+  templateUrl: './contacts-table.component.html',
+  styleUrls: ['./contacts-table.component.scss']
 })
-export class CustomersTableComponent implements OnInit {
+export class ContactsTableComponent implements OnInit {
   deleteDialogRef: MatDialogRef<ConfirmationDialogComponent>
   editDialogRef: MatDialogRef<EditDialogComponent>
 
   constructor(private serverApi:ServerApiService, 
     private authService: AuthService,
     public dialog:MatDialog,
-    private customersTableService:CustomersTableService,
+    private ContactsTableService:ContactsTableService,
     private _snackBar: MatSnackBar) { }
 
-
-  @ViewChild('agGrid') agGrid: AgGridAngular;
-  tableStateId:string = "customers-tablestate-user-";
+  @ViewChild('agGridContacts') agGrid: AgGridAngular;
+  tableStateId:string = "contacts-tablestate-user-";
   isTablePersistent:boolean = false;  
 
   ngOnInit(): void {   
     this.enablePersistentTableState();  
-    this.getCustomers(); 
+    this.getContacts(); 
     
-    this.customersTableService.refreshTable$.subscribe(()=>{      
+    this.ContactsTableService.refreshTable$.subscribe(()=>{      
       this.refreshTable();
     });
   }
 
   refreshTable(){
-    this.getCustomers();
+    this.getContacts();
   }
 
   async deleteButtonCallback(params){
@@ -74,7 +72,7 @@ export class CustomersTableComponent implements OnInit {
     });
   }
   async editButtonCallback(params){
-    this.customersTableService.selectedCustomerId = params.data.id;
+    this.ContactsTableService.selectedContactId = params.data.id;
 
     this.editDialogRef = this.dialog.open(EditDialogComponent, {disableClose:false});
     this.editDialogRef.componentInstance.customerId = params.data.id;
@@ -97,9 +95,10 @@ export class CustomersTableComponent implements OnInit {
   columnDefs = [
     {field:'id', hide:true},
     {headerName:"Name", field: 'name'},
-    {headerName:"Start Date", field: 'relationshipstart', valueFormatter:this.dateFormatter, comparator:this.dateComparator },
-    {headerName:"Activity Type", field: 'activitytype'},
-    {headerName:"E-mail", field: 'infoemail'},
+    {headerName:"First Name", field: 'firstname'},
+    {headerName:"Tel.", field: 'tel'},
+    {headerName:"Ext", field: 'ext'},
+    {headerName:"E-mail", field:'email'},
     {headerName:"",width:90, cellRenderer:"ControlsCellRenderer", pinned:"left", lockPosition:true,
       resizable:false,filter:false,sortable:false,flex:2, cellStyle:{padding:"0px",margin:"0px"}}
   ];
@@ -139,43 +138,28 @@ export class CustomersTableComponent implements OnInit {
       gridOptions.api.setSortModel(state.sortState)
       gridOptions.api.setFilterModel(state.filterState)
 
-      console.log("table was restored")
+      console.log("contacts table was restored")
     }
-  }
-
-  dateFormatter(params){
-    let dateAsString = params.data.relationshipstart   
-    let dateAsObject = new Date(Date.parse(dateAsString)); 
-
-    return dateAsObject.getUTCDate() + "/" + (dateAsObject.getUTCMonth() + 1) + "/" + dateAsObject.getUTCFullYear();
   }  
 
-  dateComparator(date1, date2) {
-    let dateObject1 = new Date(date1);
-    let dateObject2 = new Date(date2);   
-
-    return dateObject1.getTime() - dateObject2.getTime();
-  }
-
   onGridReady(){
-    if(this.isTablePersistent) this.restoreTableState();      
-      
-
+    if(this.isTablePersistent) this.restoreTableState();   
   }
 
-  getCustomers(){
-    this.rowData =  this.serverApi.getCustomers().pipe(
-      map(customers=>{   
+  getContacts(){
+    this.rowData =  this.serverApi.getContacts().pipe(
+      map(contacts=>{   
         
-        //console.log(customers)
+        console.log(contacts)
 
-        let agGridRows = customers.map(customer=>{
+        let agGridRows = contacts.map(contact=>{
           return {
-            'id':customer.id,
-            'name':customer.name, 
-            'relationshipstart':customer.relationshipstart, 
-            'activitytype': customer.activitytype,
-            'infoemail':customer.infoemail 
+            'id':contact.id,
+            'name':contact.name, 
+            'firstname':contact.firstname, 
+            'ext': contact.ext,
+            'email':contact.email ,
+            'tel':contact.tel 
           }
         });
 
@@ -186,5 +170,5 @@ export class CustomersTableComponent implements OnInit {
     );     
     
   }
-}
 
+}

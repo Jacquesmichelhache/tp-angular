@@ -38,9 +38,39 @@ export interface Customer {
   relationshipstart:string,
   activitytype:string
 }
+
+export interface Contact {
+  id:number,
+  name:string,
+  firstname:string,
+  email:string,
+  tel:string,
+  ext:string
+}
+
 export interface CustomersResponse {
   status:Status,
   data:Customer[]
+}
+export interface getContactsResponse {
+  status:Status,
+  data:Contact[]
+}
+
+export interface CustomerInformation{
+  data:{
+    attributes:{},
+    id:string,
+    type:"customer"
+  } 
+}
+
+export interface getCustomerResponse {
+  status:"error" | "success",
+  data: {
+    message:string,
+    value:CustomerInformation
+  }
 }
 
 export interface serverResponse {
@@ -116,6 +146,8 @@ export class ServerApiService {
     } 
   }
 
+
+  //Customers API 
   getCustomers():Observable<Customer[]>{    
     let options =  this.generateRequestOptions()
     return this.http.get<CustomersResponse>(this.BASE_URL + "customers",options).pipe(
@@ -124,7 +156,8 @@ export class ServerApiService {
       })
     );      
   } 
-
+  
+  
   createCustomer(customer:createCustomerRequest):Observable<serverResponse>{
     let options =  this.generateRequestOptions()
     return this.http.post<serverResponse>(this.BASE_URL + "customers",customer,options).pipe(
@@ -134,14 +167,32 @@ export class ServerApiService {
     ); 
   }
   deleteCustomer(customerId:string){
-    let options =  this.generateRequestOptions()
-    console.log("customer id to delete: "+ customerId)
-    console.log(this.BASE_URL + `customers/${customerId}`)
+    let options =  this.generateRequestOptions()   
     return this.http.delete<serverResponse>(this.BASE_URL + `customers/${customerId}`,options).pipe(
       map(response=>{
         return response;     
       })     
     ); 
+  }
+
+  getCustomerInformation(customerId:string){
+    let options =  this.generateRequestOptions()
+    return this.http.get<getCustomerResponse>(this.BASE_URL + `customers/${customerId}`,options).pipe(
+      map(response=>{
+
+        console.log(response)
+        return response;
+      })
+    )
+  }
+
+  updateCustomerInformation(id:number, customerInformation:{}){
+    let options =  this.generateRequestOptions()
+    return this.http.patch<serverResponse>(this.BASE_URL + `customers/${id}`,customerInformation,options).pipe(
+      map(response=>{
+        return response;
+      })
+    )
   }
 
   getActivityTypes():Observable<{}>{
@@ -157,4 +208,15 @@ export class ServerApiService {
       })      
     );
   }
+
+
+  //Contacts API
+  getContacts():Observable<Contact[]>{    
+    let options =  this.generateRequestOptions()
+    return this.http.get<getContactsResponse>(this.BASE_URL + "customers",options).pipe(
+      map(response=>{
+        return response.data;
+      })
+    );      
+  } 
 }

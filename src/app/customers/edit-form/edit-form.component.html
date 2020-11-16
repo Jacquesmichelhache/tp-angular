@@ -1,4 +1,4 @@
-<div class="d-flex flex-column align-items-center" style="max-width: 400px;width:100%">
+<div class="d-flex flex-column align-items-center" style="max-width:400px;width:100%">
 
   <div *ngIf="!dataHasLoaded">
     <mat-spinner [diameter]="20"></mat-spinner>
@@ -71,7 +71,21 @@
     </p>   
 
     
-    <button mat-raised-button type="submit" [disabled]="!editCutomerForm.valid || clicked">Update</button>  
+    <button mat-raised-button type="submit" [disabled]="!editCutomerForm.valid || clicked">
+      <div class="d-flex flex-row align-items-center justify-content-center" style="height:40px">
+
+        <div *ngIf="!customerIsSaving && !customerIsSuccess">Submit</div>
+
+        <div *ngIf="customerIsSaving">
+          <mat-spinner [diameter]="20"></mat-spinner>
+        </div>
+
+        <div *ngIf="customerIsSuccess">
+          <i class="fas fa-check fa-lg"></i>
+        </div>
+
+      </div>      
+    </button>  
   </form>
 
 </div>
