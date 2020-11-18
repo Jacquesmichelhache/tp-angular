@@ -1,3 +1,7 @@
+:host {
+  z-index: 10;
+}
+
 .example-icon {
   padding: 0 14px;
 }
@@ -8,4 +12,19 @@
 
 a {  
   cursor: pointer;
+  margin-right: 10px;
+  color:white;
+}
+
+.my-header{
+  min-height: 50px;
+  height:auto;
+}
+
+.navbar-toggler {
+  max-height: 30px;
+ 
+}
+.navbar-toggler-icon{
+  max-height: 25px;
 }

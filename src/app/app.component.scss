@@ -1,0 +1,38 @@
+:host {
+  display: block;
+  height:100%
+}
+
+.container {
+  height:100%;
+}
+
+.grid-container { 
+  position: relative;
+  display: grid; 
+  overflow: hidden;
+  height:100%;
+  grid-template-columns: 1fr;
+  grid-template-rows: 55px 1fr 30px;
+  grid-template-areas: 
+  "nav"
+  "main"
+  "footer";
+  grid-gap: 0.2rem;
+}
+
+
+#app-nav {
+  grid-area: nav;
+  z-index: 100;
+}
+
+#main { 
+  grid-area: main; 
+  overflow: auto; 
+}
+#footer {
+  grid-area: footer;
+  background: var(--gray-dark);
+  color:white;
+}

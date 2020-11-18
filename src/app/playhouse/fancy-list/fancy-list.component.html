@@ -1,0 +1,12 @@
+
+<form>
+  <input #criteria (input)="onFilter(criteria.value)" placeholder="Search Heroes" />
+</form>   
+
+<ul class="heroes" [@filterAnimation]="heroes.length">
+  <li *ngFor="let hero of heroes" class="hero">
+    <div class="inner">      
+      <span>{{ hero }}</span>
+    </div>
+  </li>
+</ul>

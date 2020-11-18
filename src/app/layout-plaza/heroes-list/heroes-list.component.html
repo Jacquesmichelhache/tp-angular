@@ -1,0 +1,16 @@
+<div class="d-flex flex-column sidepanel-ctn">
+
+  <form>
+    <input #criteria (input)="onFilter(criteria.value)" placeholder="Search beers" />
+  </form>   
+  
+  <ul class="heroes flex-fill" [@filterAnimation]="heroes.length">
+    <li *ngFor="let hero of heroes" class="hero">
+      <div class="inner">      
+        <div style="width:100%">{{ hero }}</div>
+      </div>
+    </li>
+  </ul>
+
+</div>
+

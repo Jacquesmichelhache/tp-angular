@@ -1,9 +1,24 @@
- <app-header></app-header>
+ 
+ 
+<div class="grid-container">
 
- <div class="container">
+  <div id="app-nav">
+    <app-header></app-header>
+  </div>
 
-  <router-outlet></router-outlet>
+
+  <div id="main" style="padding:0px"> 
+    <div class="container" style="padding:0px">
+      <router-outlet></router-outlet> 
+    </div>  
+  </div>
+
+  <div id="footer" class="d-flex flex-row align-items-center justify-content-center">
+    Persistent footer
+  </div>
 
  </div>
+ 
+
 
 

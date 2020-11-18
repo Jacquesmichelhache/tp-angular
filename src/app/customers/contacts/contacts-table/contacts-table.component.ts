@@ -92,6 +92,7 @@ export class ContactsTableComponent implements OnInit {
     filter:true,
     sortable:true,
     resizable:true,
+    minWidth:100,
     flex:2
   }
 
@@ -103,9 +104,9 @@ export class ContactsTableComponent implements OnInit {
     {field:'id', hide:true},
     {headerName:"Name", field: 'name'},
     {headerName:"First Name", field: 'firstname'},
-    {headerName:"Tel.", field: 'tel'},
+    {headerName:"Tel.", field: 'tel',minWidth:150},
     {headerName:"Ext", field: 'ext'},
-    {headerName:"E-mail", field:'email'},
+    {headerName:"E-mail", field:'email',minWidth:200},
     {headerName:"",width:90, cellRenderer:"ControlsCellRenderer", pinned:"left", lockPosition:true,
       resizable:false,filter:false,sortable:false,flex:2, cellStyle:{padding:"0px",margin:"0px"}}
   ];

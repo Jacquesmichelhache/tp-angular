@@ -45,8 +45,8 @@ import { ContactsFilterComponent } from './contacts/contacts-filter/contacts-fil
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    CustomersRoutingModule,
     MatDialogModule,   
+    CustomersRoutingModule,   
     AgGridModule.withComponents([]) 
   ],
   providers: [

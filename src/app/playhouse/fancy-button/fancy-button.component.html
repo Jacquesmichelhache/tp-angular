@@ -1,0 +1,25 @@
+
+<button (click)="onSubmit()" mat-raised-button type="submit" >
+
+  <div class="d-flex flex-row align-items-center justify-content-center" style="height:40px">
+
+    <div *ngIf="state==='submit'">Submit</div>
+  
+    <div *ngIf="state==='inProgress'" class="progress-loader" >
+      <mat-spinner [diameter]="20"></mat-spinner>
+    </div>
+  
+    <div *ngIf="state==='success'">
+      <i class="fas fa-check fa-lg"></i>
+    </div>
+
+    <div *ngIf="state==='error'">
+      <i class="fas fa-times fa-lg"></i>
+    </div>
+  
+  </div>  
+
+</button>
+
+
+

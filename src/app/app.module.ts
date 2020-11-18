@@ -20,7 +20,8 @@ import { MatInputModule} from '@angular/material/input';
 import { ConfirmationDialogComponent } from './shared/confirmation-dialog/confirmation-dialog.component';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
-
+import { PlayhouseModule } from './playhouse/playhouse.module';
+import { LayoutPlazaModule } from './layout-plaza/layout-plaza.module';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     BrowserModule,    
     HttpClientModule,
     BrowserAnimationsModule,
+    LayoutPlazaModule,
+    PlayhouseModule,
     DemoMaterialModule,  
     CustomersModule,
     AuthModule,

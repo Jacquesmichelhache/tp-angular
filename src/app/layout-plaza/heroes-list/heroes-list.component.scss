@@ -1,0 +1,44 @@
+:host {
+  display:block;
+  height:100%
+}
+
+.heroes {   
+  width:100%;
+  height:100%;
+  overflow-Y: scroll;
+  padding:0px;
+  transform:translateX(20px);
+}
+
+.inner {
+  width:100%;
+}
+
+.inner div {
+  width:100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.heroes li {  
+  width:100%;
+
+  height: 2.3em; 
+  box-sizing: border-box;
+}
+
+.sidepanel-ctn {  
+  height:100%;
+  overflow:hidden;
+}
+.sidepanelhandle {
+  z-index: 1;
+}
+
+input {
+  width:100%;
+
+}
+
