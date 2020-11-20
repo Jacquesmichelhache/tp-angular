@@ -22,11 +22,18 @@ import { ConfirmationDialogComponent } from './shared/confirmation-dialog/confir
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { PlayhouseModule } from './playhouse/playhouse.module';
 import { LayoutPlazaModule } from './layout-plaza/layout-plaza.module';
+import { DialogComponent } from './shared/dialog/dialog.component';
+import { DialogDirective } from './dialog.directive';
+import { AdDirective } from './ad.directive';
+import { MyAdComponent } from './shared/my-ad/my-ad.component';
+import { YesNoDialogComponent } from './shared/yes-no-dialog/yes-no-dialog.component';
+
+
 
 @NgModule({
   declarations: [
     AppComponent,  
-    HeaderComponent, LogoutComponent, ConfirmationDialogComponent
+    HeaderComponent, LogoutComponent, ConfirmationDialogComponent, DialogComponent, DialogDirective, AdDirective, MyAdComponent, YesNoDialogComponent
   ],
   imports: [   
     BrowserModule,    

@@ -58,4 +58,9 @@ export class HeroesListComponent implements OnInit {
 
     this.heroes = this.herosList.filter((hero=>hero.toLowerCase().includes(criteria.toLowerCase())))
   }
+
+  onClick(){
+
+    
+  }
 }

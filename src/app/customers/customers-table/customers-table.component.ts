@@ -42,7 +42,7 @@ export class CustomersTableComponent implements OnInit {
 
   ngOnInit(): void {   
     this.enablePersistentTableState();  
-    this.getCustomers(); 
+    this.refreshTable();
     
     this.customersTableService.refreshTable$.subscribe(()=>{      
       this.refreshTable();

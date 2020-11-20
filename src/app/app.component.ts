@@ -1,7 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, ComponentFactoryResolver, ViewChild } from '@angular/core';
 import { ServerApiService } from '../app/server-api.service';
 import { RouterOutlet } from '@angular/router';
-
+import { DialogLoaderService } from './dialog-loader.service';
+import { DialogComponent } from './shared/dialog/dialog.component';
+import { AdDirective } from './ad.directive';
+import {CustomersTableComponent} from './customers/customers-table/customers-table.component'
 
 @Component({
   selector: 'app-root',
@@ -10,9 +13,21 @@ import { RouterOutlet } from '@angular/router';
 })
 export class AppComponent {
   title = 'tp-angular';
+  showDialog = false;
 
-  constructor(private serverApi: ServerApiService){
+  @ViewChild(AdDirective, {static: true}) adHost: AdDirective;
 
+  constructor(private serverApi: ServerApiService, public dialogService: DialogLoaderService) {
+      dialogService.getHostCallBack = () => this.adHost      
+    } 
+
+  onClick(){
+
+    this.dialogService.customDialog(CustomersTableComponent).subscribe();
+
+    // this.dialogService.showYesNoDialog().subscribe((value)=>{
+    //   console.log(value);
+    // });
   }
 
   logIn(){

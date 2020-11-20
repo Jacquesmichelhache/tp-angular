@@ -8,17 +8,25 @@
 
 
   <div id="main" style="padding:0px"> 
+
+    <button (click)="onClick()">add an AD</button>
+
     <div class="container" style="padding:0px">
       <router-outlet></router-outlet> 
-    </div>  
+    </div>     
+
   </div>
 
-  <div id="footer" class="d-flex flex-row align-items-center justify-content-center">
-    Persistent footer
+  <div id="footer" class="d-flex flex-row align-items-center justify-content-center">    
+
   </div>
 
  </div>
+
+ <ng-template adHost></ng-template>
+
  
+
 
 
 
